@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2024-02-01 20:53:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "timestamp",
+  "remote_warehouse",
+  "status",
+  "section_break_1",
+  "error_message"
+ ],
+ "fields": [
+  {
+   "fieldname": "timestamp",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Timestamp",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remote_warehouse",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remote Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Success\nFailed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Error Details"
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Long Text",
+   "label": "Error Message",
+   "description": "Full error message and stack trace"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-01 20:53:00.000000",
+ "modified_by": "Administrator",
+ "module": "TheShop",
+ "name": "Stock Sync Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

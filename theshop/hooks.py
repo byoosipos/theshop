@@ -32,8 +32,10 @@ app_license = "mit"
 # web_include_css = "/assets/theshop/css/theshop.css"
 # web_include_js = "/assets/theshop/js/theshop.js"
 
-# include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "theshop/public/scss/website"
+# Website Routes
+#website_route_rules = [
+#    {"from_route": "/new-user", "to_route": "www/new-user.html"}
+#]
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -43,10 +45,9 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
-# doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
-# doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
+doctype_js = {
+    "Delivery Note": "config/auto_create_invoice.js"
+}
 
 # Svg Icons
 # ------------------
@@ -93,11 +94,22 @@ app_license = "mit"
 
 # Integration Setup
 # ------------------
+
+# Scheduler
+# ------------
+scheduler_events = {
+	"cron": {
+		"*/5 * * * *": [
+			"theshop.theshop.stock_sync.stock_sync_handler.sync_all_sites",
+            "theshop.theshop.stock_sync.website_item_handler.sync_all_website_items"
+		]
+	}
+}
+
 # To set up dependencies/integrations with other apps
 # Name of the app being installed is passed as an argument
 
 # before_app_install = "theshop.utils.before_app_install"
-# after_app_install = "theshop.utils.after_app_install"
 
 # Integration Cleanup
 # -------------------
@@ -143,27 +155,6 @@ app_license = "mit"
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 # 	}
-# }
-
-# Scheduled Tasks
-# ---------------
-
-# scheduler_events = {
-# 	"all": [
-# 		"theshop.tasks.all"
-# 	],
-# 	"daily": [
-# 		"theshop.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"theshop.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"theshop.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"theshop.tasks.monthly"
-# 	],
 # }
 
 # Testing
@@ -241,4 +232,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-

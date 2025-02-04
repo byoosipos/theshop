@@ -1,0 +1,13 @@
+{
+    "no_cache": 1,
+    "no_sitemap": 1,
+    "api": {
+        "methods": [
+            "get_all_items",
+            "get_item_categories",
+            "get_item_details",
+            "get_items_by_category",
+            "search_items"
+        ]
+    }
+} 

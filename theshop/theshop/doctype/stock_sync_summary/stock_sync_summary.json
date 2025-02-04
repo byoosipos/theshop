@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2024-02-01 20:55:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "start_time",
+  "duration",
+  "status",
+  "error_message"
+ ],
+ "fields": [
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "label": "Start Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Float",
+   "label": "Duration (seconds)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Success\nFailed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Long Text",
+   "label": "Error Message"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-01 20:55:00.000000",
+ "modified_by": "Administrator",
+ "module": "TheShop",
+ "name": "Stock Sync Summary",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+} 

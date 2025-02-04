@@ -1,0 +1,436 @@
+<header class="header navbar navbar-primary navbar-expand-lg">
+    <div class="nav-container container">
+        <!-- Logo -->
+        <div class="logo navbar-brand">
+            <a href="/">
+                <img src='/files/logo.png' alt="Home">
+            </a>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-bar-container">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search products...">
+                <button class="clear-search" type="button">
+                    <i class="bi bi-x"></i>
+                </button>
+                <button class="search-button btn-base" type="button">Search</button>
+            </div>
+        </div>
+
+        <!-- Navigation Actions -->
+        <div class="nav-actions">
+            {% if frappe.session.user != 'Guest' %}
+                <a href="/cart" class="cart-btn btn-base">
+                    <i class="bi bi-cart"></i>
+                    <span>Cart</span>
+                    <span class="cart-count" style="display: none;"></span>
+                </a>
+            {% else %}
+                <a href="/login" class="login-btn">
+                    <span>Login</span>
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler mobile-menu-btn" type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span>
+                <svg class="icon icon-lg">
+                    <use href="#icon-menu"></use>
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <!-- Frappe Navbar Items -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% include "templates/includes/navbar/navbar_items.html" %}
+    </div>
+</header>
+
+<style>
+:root {
+    /* Modern Color Palette - Lighter Theme */
+    --primary: #1E3B7B;  /* Metro blue */
+    --accent: #E31837;   /* Metro red */
+    --accent-glow: rgba(227, 24, 55, 0.2);  /* Softer red glow */
+    --danger: #E31837;
+    --text: #1E3B7B;     /* Dark blue text */
+    --text-muted: #64748B;
+    --surface: rgba(255, 255, 255, 0.95);  /* Light background */
+    --surface-light: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(30, 59, 123, 0.1);  /* Subtle blue border */
+    
+    /* Effects */
+    --blur: 8px;
+    --glow: 0 0 20px rgba(227, 24, 55, 0.15);  /* Red glow */
+    --shadow: 0 4px 16px rgba(30, 59, 123, 0.1);  /* Blue shadow */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Futuristic Header */
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    padding: 0.75rem 0;
+    transition: var(--transition);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Modern Logo */
+.logo {
+    height: 40px;
+    min-width: 120px;
+    padding: 0;
+    transition: var(--transition);
+    filter: brightness(1.2);
+}
+
+.logo:hover {
+    filter: brightness(1.4) drop-shadow(0 0 8px var(--accent-glow));
+}
+
+/* Futuristic Search Bar */
+.search-bar-container {
+    background: white;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 8px rgba(30, 59, 123, 0.05);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition);
+}
+
+.search-bar-container:focus-within {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.search-bar input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-bar .bi-search {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.search-button {
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+}
+
+/* Modern Cart Button */
+.cart-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    position: relative;
+    transition: var(--transition);
+    padding: 0.5rem;
+}
+
+.cart-btn .bi-cart {
+    font-size: 1.75rem;
+    transition: var(--transition);
+}
+
+.cart-btn:hover .bi-cart {
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.cart-count {
+    background: var(--danger);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    transition: var(--transition);
+}
+
+/* Futuristic Mobile Menu */
+.mobile-menu-btn {
+    background: white;
+    border: 1px solid var(--glass-border);
+    color: var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .header {
+        background: var(--surface);
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+
+    .search-bar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: var(--surface);
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+        border-top: 1px solid var(--glass-border);
+        display: none;
+    }
+
+    .search-bar.active {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from { transform: translateY(-10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .cart-btn {
+        padding: 0.5rem;
+    }
+
+    .cart-btn .bi-cart {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animations */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px var(--accent-glow); }
+    50% { box-shadow: 0 0 20px var(--accent-glow); }
+    100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+.search-button:hover {
+    animation: glow 2s infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+.logo:hover {
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --surface: rgba(255, 255, 255, 0.95);
+        --surface-light: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Futuristic Login Button */
+.login-btn {
+    background: linear-gradient(135deg, var(--accent), #ff1f1f);
+    color: white;
+    padding: 0.6rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--accent-glow);
+    color: white;
+}
+
+.login-btn:hover::before {
+    left: 100%;
+}
+
+/* Mobile adjustments for login button */
+@media (max-width: 768px) {
+    .login-btn {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.querySelector('.search-bar input');
+    const searchButton = document.querySelector('.search-button');
+    const clearButton = document.querySelector('.clear-search');
+    
+    function handleSearch() {
+        const query = searchInput.value.trim();
+        if (query) {
+            window.location.href = `/product_search?search=${encodeURIComponent(query)}`;
+        }
+    }
+
+    if (searchInput && clearButton) {
+        // Search input handler
+        searchInput.addEventListener('input', function() {
+            clearButton.style.display = this.value ? 'block' : 'none';
+        });
+
+        // Clear button handler
+        clearButton.addEventListener('click', function() {
+            searchInput.value = '';
+            this.style.display = 'none';
+            searchInput.focus();
+        });
+
+        // Search submission handlers
+        searchButton.addEventListener('click', handleSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+    }
+
+    // Cart functionality - Only for logged in users
+    if (frappe.session.user !== "Guest") {
+        // Listen for cart updates from other parts of the application
+        $(document).on('cart-update shopping_cart_update', function(event, data) {
+            if (data && data.qty !== undefined) {
+                const cartCount = document.querySelector('.cart-count');
+                if (cartCount) {
+                    cartCount.textContent = data.qty;
+                    cartCount.style.display = data.qty > 0 ? 'block' : 'none';
+                }
+            }
+        });
+    }
+
+    // Mobile search toggle
+    const mobileSearchBtn = document.querySelector('.mobile-menu-btn');
+    const searchBar = document.querySelector('.search-bar');
+    let isSearchVisible = false;
+
+    function toggleSearch(event) {
+        if (window.innerWidth <= 768) {
+            event.preventDefault();
+            isSearchVisible = !isSearchVisible;
+            searchBar.classList.toggle('active', isSearchVisible);
+            
+            if (isSearchVisible) {
+                searchInput.focus();
+            }
+        }
+    }
+
+    // Close search when clicking outside
+    document.addEventListener('click', function(event) {
+        if (isSearchVisible && !searchBar.contains(event.target) && !mobileSearchBtn.contains(event.target)) {
+            isSearchVisible = false;
+            searchBar.classList.remove('active');
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            searchBar.classList.remove('active');
+            isSearchVisible = false;
+        }
+    });
+
+    mobileSearchBtn.addEventListener('click', toggleSearch);
+});
+</script>

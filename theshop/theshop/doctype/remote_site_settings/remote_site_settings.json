@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-01 20:55:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "sync_options_section",
+  "sync_item_groups",
+  "sync_items",
+  "sync_prices",
+  "sync_stock",
+  "sync_website_items",
+  "column_break_1",
+  "auto_create_item_groups",
+  "auto_create_items",
+  "auto_update_prices",
+  "auto_publish_items",
+  "warehouse_section",
+  "remote_warehouse",
+  "local_warehouse",
+  "database_section",
+  "db_host",
+  "db_port",
+  "db_name",
+  "db_user",
+  "db_password"
+ ],
+ "fields": [
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "sync_options_section",
+   "fieldtype": "Section Break",
+   "label": "Sync Options"
+  },
+  {
+   "default": "0",
+   "description": "Sync item group hierarchy from remote site",
+   "fieldname": "sync_item_groups",
+   "fieldtype": "Check",
+   "label": "Sync Item Groups"
+  },
+  {
+   "default": "0",
+   "description": "Sync items from remote site",
+   "fieldname": "sync_items",
+   "fieldtype": "Check",
+   "label": "Sync Items"
+  },
+  {
+   "default": "0",
+   "description": "Sync item prices from remote site",
+   "fieldname": "sync_prices",
+   "fieldtype": "Check",
+   "label": "Sync Prices"
+  },
+  {
+   "default": "0",
+   "description": "Sync stock levels from remote site",
+   "fieldname": "sync_stock",
+   "fieldtype": "Check",
+   "label": "Sync Stock"
+  },
+  {
+   "default": "0",
+   "description": "Create/update website items for synced items",
+   "fieldname": "sync_website_items",
+   "fieldtype": "Check",
+   "label": "Sync Website Items"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Automatically create missing item groups",
+   "fieldname": "auto_create_item_groups",
+   "fieldtype": "Check",
+   "label": "Auto Create Item Groups"
+  },
+  {
+   "default": "0",
+   "description": "Automatically create missing items",
+   "fieldname": "auto_create_items",
+   "fieldtype": "Check",
+   "label": "Auto Create Items"
+  },
+  {
+   "default": "0",
+   "description": "Automatically update existing prices",
+   "fieldname": "auto_update_prices",
+   "fieldtype": "Check",
+   "label": "Auto Update Prices"
+  },
+  {
+   "default": "0",
+   "description": "Automatically publish items to website",
+   "fieldname": "auto_publish_items",
+   "fieldtype": "Check",
+   "label": "Auto Publish Items"
+  },
+  {
+   "fieldname": "warehouse_section",
+   "fieldtype": "Section Break",
+   "label": "Warehouse Settings"
+  },
+  {
+   "fieldname": "remote_warehouse",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remote Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "local_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Local Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "database_section",
+   "fieldtype": "Section Break",
+   "label": "Database Connection"
+  },
+  {
+   "fieldname": "db_host",
+   "fieldtype": "Data",
+   "label": "Database Host",
+   "reqd": 1
+  },
+  {
+   "default": "3306",
+   "fieldname": "db_port",
+   "fieldtype": "Int",
+   "label": "Database Port"
+  },
+  {
+   "fieldname": "db_name",
+   "fieldtype": "Data",
+   "label": "Database Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "db_user",
+   "fieldtype": "Data",
+   "label": "Database User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "db_password",
+   "fieldtype": "Data",
+   "label": "Database Password",
+   "permlevel": 10,
+   "reqd": 1,
+   "width": "1"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-04 01:11:56.944117",
+ "modified_by": "Administrator",
+ "module": "Theshop",
+ "name": "Remote Site Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

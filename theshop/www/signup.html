@@ -1,0 +1,305 @@
+{% extends "templates/web.html" %}
+
+{% block title %}New User Registration - The Shop{% endblock %}
+
+{% block style %}
+<style>
+    :root {
+        /* Modern Color Palette - Lighter Theme */
+        --primary: #1E3B7B;  /* Metro blue */
+        --accent: #E31837;   /* Metro red */
+        --accent-glow: rgba(227, 24, 55, 0.2);  /* Softer red glow */
+        --danger: #E31837;
+        --text: #1E3B7B;     /* Dark blue text */
+        --text-muted: #64748B;
+        --surface: rgba(255, 255, 255, 0.95);  /* Light background */
+        --surface-light: rgba(255, 255, 255, 0.8);
+        --glass-border: rgba(30, 59, 123, 0.1);  /* Subtle blue border */
+        
+        /* Effects */
+        --blur: 8px;
+        --glow: 0 0 20px rgba(227, 24, 55, 0.15);  /* Red glow */
+        --shadow: 0 4px 16px rgba(30, 59, 123, 0.1);  /* Blue shadow */
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .signup-container {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        margin-top: 72px;
+    }
+
+    .signup-card {
+        background: var(--surface);
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 3rem;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: var(--shadow);
+    }
+
+    .signup-card h2 {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-weight: 600;
+        font-size: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: var(--text);
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        border: 2px solid var(--glass-border);
+        border-radius: 12px;
+        background: var(--surface-light);
+        color: var(--text);
+        transition: var(--transition);
+        font-size: 1.1rem;
+        height: 3.5rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent);
+        box-shadow: var(--glow);
+        outline: none;
+        transform: translateY(-1px);
+    }
+
+    .password-input {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+    .toggle-password:hover {
+        color: var(--primary);
+    }
+
+    .btn-signup {
+        width: 100%;
+        padding: 1.25rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        height: 3.75rem;
+    }
+
+    .btn-signup:hover {
+        background: var(--accent);
+        box-shadow: var(--glow);
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-muted);
+    }
+
+    .form-footer a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .signup-container {
+            padding: 1rem;
+        }
+        
+        .signup-card {
+            padding: 2rem;
+        }
+        
+        .form-control, .btn-signup {
+            height: 3.25rem;
+            font-size: 1rem;
+        }
+    }
+
+    .logo-container {
+        margin-bottom: 2rem;
+    }
+
+    .signup-logo {
+        height: 60px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        transition: transform 0.3s ease;
+    }
+
+    .signup-logo:hover {
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .signup-logo {
+            height: 50px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    frappe.provide('theshop');
+
+    theshop = {
+        showNotification: function(message, type = 'success') {
+            frappe.show_alert({
+                message: __(message),
+                indicator: type
+            });
+        },
+
+        togglePasswordVisibility: function(buttonElement) {
+            const passwordInput = $(buttonElement).siblings('input');
+            const icon = $(buttonElement).find('i');
+            
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                icon.removeClass('bi-eye').addClass('bi-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                icon.removeClass('bi-eye-slash').addClass('bi-eye');
+            }
+        },
+
+        handleSignup: function(formElement) {
+            // Prevent default form submission
+            event.preventDefault();
+            
+            // Get form data
+            const fullName = $('#full_name').val();
+            const email = $('#email').val();
+            const password = $('#password').val();
+
+            // Basic validation
+            if (!fullName || !email || !password) {
+                theshop.showNotification('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = $(formElement).find('button[type="submit"]');
+            const originalText = submitBtn.text();
+            submitBtn.prop('disabled', true).text('Creating Account...');
+
+            frappe.call({
+                method: 'frappe.core.doctype.user.user.sign_up',
+                args: {
+                    full_name: fullName,
+                    email: email,
+                    password: password,
+                    redirect_to: '/login'
+                },
+                callback: function(r) {
+                    if (r.message) {
+                        theshop.showNotification('Registration successful. Please check your email.');
+                        setTimeout(() => window.location.href = '/login', 2000);
+                    } else {
+                        submitBtn.prop('disabled', false).text(originalText);
+                        theshop.showNotification('Registration failed. Please try again.', 'error');
+                    }
+                },
+                error: function(r) {
+                    submitBtn.prop('disabled', false).text(originalText);
+                    const errorMessage = r.responseJSON ? (r.responseJSON._server_messages ? JSON.parse(r.responseJSON._server_messages)[0] : r.responseJSON.message) : 'Something went wrong. Please try again.';
+                    theshop.showNotification(errorMessage, 'error');
+                    console.error('Signup error:', r);
+                }
+            });
+        }
+    };
+
+    // Initialize form handling when document is ready
+    $(document).ready(function() {
+        $('.signup-form').on('submit', function(e) {
+            theshop.handleSignup(this);
+            return false;
+        });
+    });
+</script>
+{% endblock %}
+
+{% block page_content %}
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="logo-container text-center mb-4">
+            <img src="/files/logo.png" alt="Metro Logo" class="signup-logo">
+        </div>
+        <h2>Signup to Get Started</h2>
+        <form class="signup-form">
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" class="form-control" 
+                       required minlength="3" pattern="[A-Za-z\s.]+" 
+                       title="Please enter a valid name (letters, spaces, and dots only)">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" 
+                       required
+                       title="Please enter a valid email address">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" class="form-control" 
+                           required minlength="8"
+                           title="Password must be at least 8 characters long">
+                    <button type="button" class="toggle-password" onclick="theshop.togglePasswordVisibility(this)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-signup">Create Account</button>
+            
+            <div class="form-footer">
+                Already have an account? <a href="/login">Login here</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 
